@@ -1,22 +1,21 @@
 import React from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { render as rtlRender } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
-const AllProviders = ({ children }: { children: React.ReactNode }) => {
+function AllProviders({ children }: { children: React.ReactNode }) {
   return (
-    <ChakraProvider>
-      <BrowserRouter>
-        {children}
-      </BrowserRouter>
-    </ChakraProvider>
+    <BrowserRouter>
+      {children}
+    </BrowserRouter>
   );
-};
+}
 
-const customRender = (
-  ui: React.ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, { wrapper: AllProviders, ...options });
+function customRender(ui: React.ReactElement, options = {}) {
+  return rtlRender(ui, { wrapper: AllProviders, ...options });
+}
 
+// Re-export everything
 export * from '@testing-library/react';
+
+// Override render method
 export { customRender as render }; 
