@@ -41,47 +41,47 @@ interface MoodSliders {
 const SLIDER_CONFIG = {
   happiness: {
     labels: ['Traurig', 'Glücklich'],
-    gradient: ['blue.400', 'yellow.400'],
+    gradient: ['catppuccin.blue', 'catppuccin.yellow'],
     icon: '😊'
   },
   energy: {
     labels: ['Entspannt', 'Energiegeladen'],
-    gradient: ['green.300', 'orange.400'],
+    gradient: ['catppuccin.green', 'catppuccin.peach'],
     icon: '⚡'
   },
   humor: {
     labels: ['Ernst', 'Humorvoll'],
-    gradient: ['purple.400', 'pink.300'],
+    gradient: ['catppuccin.mauve', 'catppuccin.pink'],
     icon: '😄'
   },
   thoughtfulness: {
     labels: ['Locker', 'Tiefgründig'],
-    gradient: ['blue.200', 'blue.800'],
+    gradient: ['catppuccin.sky', 'catppuccin.blue'],
     icon: '🤔'
   },
   realism: {
     labels: ['Realistisch', 'Fantastisch'],
-    gradient: ['gray.400', 'purple.500'],
+    gradient: ['catppuccin.overlay0', 'catppuccin.lavender'],
     icon: '🌟'
   },
   comfort: {
     labels: ['Trostbedürftig', 'Emotional stabil'],
-    gradient: ['red.300', 'green.400'],
+    gradient: ['catppuccin.red', 'catppuccin.green'],
     icon: '🫂'
   },
   social: {
     labels: ['Introvertiert', 'Beziehungsorientiert'],
-    gradient: ['blue.300', 'pink.400'],
+    gradient: ['catppuccin.blue', 'catppuccin.pink'],
     icon: '👥'
   },
   clarity: {
     labels: ['Einfach abschalten', 'Mind-Bending'],
-    gradient: ['green.200', 'purple.600'],
+    gradient: ['catppuccin.teal', 'catppuccin.mauve'],
     icon: '🌀'
   },
   attention: {
     labels: ['Kurz & leicht', 'Intensiv & fordernd'],
-    gradient: ['yellow.300', 'red.500'],
+    gradient: ['catppuccin.yellow', 'catppuccin.red'],
     icon: '📚'
   }
 };
@@ -160,14 +160,14 @@ const CustomSlider: React.FC<{
           <Text
             fontSize="sm"
             fontWeight="medium"
-            color={useColorModeValue('gray.600', 'gray.300')}
+            color="catppuccin.subtext0"
           >
             {config.labels[0]}
           </Text>
           <Text
             fontSize="sm"
             fontWeight="medium"
-            color={useColorModeValue('gray.600', 'gray.300')}
+            color="catppuccin.subtext0"
           >
             {config.labels[1]}
           </Text>
@@ -180,8 +180,11 @@ const CustomSlider: React.FC<{
           top="-1"
           transform="translateX(-50%)"
           zIndex={1}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg="catppuccin.surface0"
           px={2}
+          borderRadius="md"
+          border="1px solid"
+          borderColor="catppuccin.surface1"
         >
           <Text fontSize="lg" lineHeight="1">
             {config.icon}
@@ -222,22 +225,28 @@ const CustomSlider: React.FC<{
           
           <SliderThumb
             boxSize={4}
-            bg="white"
-            boxShadow="0 1px 2px rgba(0,0,0,0.1)"
+            bg="catppuccin.surface0"
+            border="2px solid"
+            borderColor={config.gradient[1]}
             _focus={{ 
-              boxShadow: `0 0 8px ${config.gradient[1]}`,
+              boxShadow: `0 0 0 3px ${config.gradient[1]}25`,
+              borderColor: config.gradient[1],
             }}
             _hover={{ 
-              boxShadow: `0 0 12px ${config.gradient[1]}`,
-              transform: 'scale(1.1)',
+              boxShadow: `0 0 0 3px ${config.gradient[1]}25`,
+              borderColor: config.gradient[1],
             }}
             _active={{
-              boxShadow: `0 0 16px ${config.gradient[1]}`,
+              boxShadow: `0 0 0 4px ${config.gradient[1]}40`,
+              borderColor: config.gradient[1],
               cursor: "grabbing",
-              transform: 'scale(1.15)',
             }}
             cursor="grab"
             transition="all 0.2s"
+            sx={{
+              transform: 'translateY(-50%) !important',
+              top: '50% !important',
+            }}
           />
         </Slider>
       </Box>
@@ -302,8 +311,10 @@ const MoodInput: React.FC = () => {
   const navigate = useNavigate()
   const isMobile = useBreakpointValue({ base: true, md: false })
   
-  const bgColor = useColorModeValue('white', 'gray.800')
-  const borderColor = useColorModeValue('gray.200', 'gray.600')
+  const bgColor = useColorModeValue('catppuccin.surface0', 'catppuccin.base')
+  const textColor = useColorModeValue('catppuccin.text', 'catppuccin.text')
+  const borderColor = useColorModeValue('catppuccin.surface1', 'catppuccin.surface1')
+  const subTextColor = useColorModeValue('catppuccin.subtext0', 'catppuccin.subtext0')
 
   const handleSliderChange = (name: keyof MoodSliders, value: number) => {
     setSliders(prev => ({
@@ -329,7 +340,7 @@ const MoodInput: React.FC = () => {
       minH="100vh"
       position="relative"
       overflow="hidden"
-      bg={useColorModeValue('gray.50', 'gray.900')}
+      bg="catppuccin.base"
       _before={{
         content: '""',
         position: 'fixed',
@@ -350,7 +361,7 @@ const MoodInput: React.FC = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `linear-gradient(to bottom, rgba(30, 30, 46, 0.95), rgba(30, 30, 46, 0.85)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070')`,
+          backgroundImage: `linear-gradient(to bottom, rgba(24, 24, 37, 0.95), rgba(24, 24, 37, 0.85))`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           zIndex: 1,
@@ -376,11 +387,11 @@ const MoodInput: React.FC = () => {
                 as={FaFilm} 
                 w={12} 
                 h={12} 
-                color="purple.400"
+                color="catppuccin.mauve"
               />
               <Heading
                 size={isMobile ? "2xl" : "3xl"}
-                bgGradient="linear(to-r, purple.400, pink.400)"
+                bgGradient="linear(to-r, catppuccin.mauve, catppuccin.pink)"
                 bgClip="text"
                 letterSpacing="tight"
                 lineHeight="1.2"
@@ -389,7 +400,7 @@ const MoodInput: React.FC = () => {
               </Heading>
               <Text
                 fontSize={isMobile ? "lg" : "xl"}
-                color={useColorModeValue('gray.600', 'gray.300')}
+                color="catppuccin.subtext0"
                 maxW="2xl"
               >
                 Lass uns deine Stimmung erkunden und den idealen Film für dich finden
@@ -403,9 +414,21 @@ const MoodInput: React.FC = () => {
               p={isMobile ? 6 : 8}
               border="1px solid"
               borderColor={borderColor}
-              boxShadow="xl"
+              boxShadow="dark-lg"
               position="relative"
               backdropFilter="blur(8px)"
+              _before={{
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: '2xl',
+                background: 'linear-gradient(135deg, catppuccin.surface1 0%, transparent 100%)',
+                opacity: 0.1,
+                pointerEvents: 'none',
+              }}
             >
               <form onSubmit={handleSubmit}>
                 <VStack spacing={8}>
@@ -415,9 +438,9 @@ const MoodInput: React.FC = () => {
                         fontSize="md"
                         fontWeight="semibold"
                         mb={4}
-                        color={useColorModeValue('gray.700', 'gray.300')}
+                        color="catppuccin.subtext0"
                         borderBottom="2px solid"
-                        borderColor={useColorModeValue('gray.200', 'gray.600')}
+                        borderColor="catppuccin.surface1"
                         pb={2}
                       >
                         {group.title}
@@ -438,14 +461,14 @@ const MoodInput: React.FC = () => {
                   <Box
                     w="100%"
                     p={4}
-                    bg={useColorModeValue('purple.50', 'whiteAlpha.50')}
+                    bg="catppuccin.surface0"
                     borderRadius="lg"
                     border="1px solid"
-                    borderColor={useColorModeValue('purple.100', 'whiteAlpha.100')}
+                    borderColor="catppuccin.surface1"
                   >
                     <Text
                       fontSize="md"
-                      color={useColorModeValue('purple.700', 'purple.200')}
+                      color="catppuccin.subtext0"
                       fontStyle="italic"
                     >
                       {moodDescription}
@@ -453,47 +476,50 @@ const MoodInput: React.FC = () => {
                   </Box>
 
                   <VStack spacing={3} w="100%" pt={4}>
-                    <Text 
-                      alignSelf="start" 
-                      color="catppuccin.subtext1"
+                    <Text
+                      alignSelf="start"
                       fontSize="sm"
+                      fontWeight="medium"
+                      color="catppuccin.subtext0"
                     >
-                      Möchtest du uns mehr über deine Stimmung erzählen?
+                      Beschreibe deine Stimmung (optional)
                     </Text>
                     <Textarea
                       value={moodText}
                       onChange={(e) => setMoodText(e.target.value)}
-                      placeholder="z.B. 'Ich suche etwas Aufmunterndes nach einem anstrengenden Tag...'"
-                      bg={useColorModeValue('white', 'gray.700')}
-                      border="2px solid"
-                      borderColor={useColorModeValue('gray.200', 'gray.600')}
+                      placeholder="z.B. Ich möchte etwas Romantisches mit einer Prise Humor..."
+                      size="md"
+                      resize="vertical"
+                      maxLength={200}
+                      bg="catppuccin.surface0"
+                      borderColor="catppuccin.surface1"
                       color="catppuccin.text"
                       _placeholder={{ color: 'catppuccin.overlay0' }}
-                      _hover={{ borderColor: useColorModeValue('purple.400', 'purple.300') }}
-                      _focus={{
-                        borderColor: useColorModeValue('purple.400', 'purple.300'),
-                        boxShadow: `0 0 0 1px ${useColorModeValue('purple.400', 'purple.300')}`
+                      _hover={{
+                        borderColor: 'catppuccin.mauve'
                       }}
-                      minH="100px"
+                      _focus={{
+                        borderColor: 'catppuccin.mauve',
+                        boxShadow: '0 0 0 1px var(--chakra-colors-catppuccin-mauve)'
+                      }}
                     />
                   </VStack>
 
                   <Button
                     type="submit"
-                    size={isMobile ? "lg" : "xl"}
+                    size="lg"
                     width="full"
-                    bgGradient="linear(to-r, purple.500, pink.500)"
-                    color="white"
+                    bg="catppuccin.mauve"
+                    color="catppuccin.base"
                     _hover={{
-                      bgGradient: "linear(to-r, purple.600, pink.600)",
+                      bg: 'catppuccin.pink',
                       transform: 'translateY(-2px)',
-                      boxShadow: '0 0 20px rgba(159, 122, 234, 0.4)',
+                      boxShadow: '0 0 20px var(--chakra-colors-catppuccin-mauve)',
                     }}
                     _active={{
-                      bgGradient: "linear(to-r, purple.700, pink.700)",
+                      bg: 'catppuccin.mauve',
                       transform: 'translateY(0)',
                     }}
-                    rightIcon={<FaArrowRight />}
                     transition="all 0.2s"
                   >
                     Filme entdecken
